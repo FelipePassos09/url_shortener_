@@ -1,14 +1,16 @@
 import requests as rq
 import csv
-#import json
 from datetime import date
 import pandas as pd
 
-api_key = 'MNwFlIG5wsrLDtx6mqCSeEiRLzO1CmgnsbgbkAGc'
+api_key = 'your-key'
 url_api = 'https://kutt.it/api/v2/links'
 csv_file = 'database/dados.csv'
+link_expiration = '999months'
 
 def header():
+    """Making header to request.
+    """
     header = {
         "X-API-KEY":api_key,
     }
@@ -28,13 +30,13 @@ def req(method:dict):
     return result
 
 
-# Fazendo o request e gerando o link.
+# Making the request and generating links..
 with open(csv_file) as database:
     list_archives = csv.reader(database,delimiter=',')
     line_count = 0
     
     
-    # Criando DataFrame de destino:
+    # Create target dataframe:
     filename = (f'./database/dataset_{date.today()}.csv')
     dataset = {
     'url':[],
@@ -45,26 +47,24 @@ with open(csv_file) as database:
     df = pd.DataFrame(dataset)
     
     
-    # Lendo o arquivo e montando o pacote da requisição:
+    # Reading file an making package of the requisition:
     
     for row in list_archives:
         call_shortener = {
   "target": row[0],
   "description": "",
-  "expire_in": "5minutes",
+  "expire_in": link_expiration,
   "password": "",
   "customurl": "",
   "reuse": 'false',
   "domain": ""
 }
-    # Efetuando as requisições e gravando os resultados:
+    # Request and record responses:
         response = req(call_shortener)
         if 'error' in response:
-            #repo_post = pd.read_csv(filename, delimiter=',')
             newRow = {'url': response['error'], 'name':response['error'], 'destino':response['error'], 'length': response['error']}
             df = df.append(newRow, ignore_index=True)
         else:
-            #repo_post = pd.read_csv(filename, delimiter=',')
             newRow = {'url':response['link'],
                       'name':'null',
                       'destino':response['target'],
@@ -72,6 +72,6 @@ with open(csv_file) as database:
             df = df.append(newRow, ignore_index=True)
     
     
-    # Exportando o resultado:
+    # Exporting results:
     
     df.to_csv(filename)
