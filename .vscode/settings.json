@@ -1,0 +1,12 @@
+{
+
+  "code-runner.executorMap": {
+    "python": "/venv/Scripts/python.exe",
+
+  },
+
+  "code-runner.runInTerminal": true,
+  "git.ignoreLimitWarning": true,
+
+
+}
