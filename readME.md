@@ -13,7 +13,7 @@
 <div style="text-align:left; color:purple; font-family: Arial, sans-serif;font-size:18px; ">
 <p>Soon new features will be added with:</p>
 <li>Consult links generated.</li>
-<li>Delet links.</li>
+<li>Delete links.</li>
 <li>Change names and properties.</li>
 <li>Control of duplicated links.</li>
 </div>
